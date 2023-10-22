@@ -1,137 +1,140 @@
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
-                </div><!-- /.col -->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <?php
+            
+            if (isset($_SESSION['success_message'])) {
+                echo '<button class="btn btn-success toastsDefaultSuccess">' . $_SESSION['success_message'] . '</button>';
+                unset($_SESSION['success_message']); // Hapus pesan sukses dari session
+            } elseif (isset($_SESSION['error_message'])) {
+                echo '<button class="btn btn-danger toastsDefaultDanger">' . $_SESSION['error_message'] . '</button>';
+                unset($_SESSION['error_message']); // Hapus pesan error dari session
+            }
+            ?>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div><!-- /.col -->
 
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active"><?php echo $title; ?></li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-            <button class="btn btn-success mx-4" onclick="location.href='dashboard.php?module=add_book_data'">Add</button>
-        </div><!-- /.container-fluid -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active"><?php echo $title; ?></li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        <button class="btn btn-success mx-4" onclick="location.href='dashboard.php?module=add_book_data'">Add</button>
+    </div><!-- /.container-fluid -->
 
-    </div>
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <!-- /.row -->
+</div>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- /.row -->
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <?php
-                            if (isset($_GET['message'])) {
-                                $success_message = $_GET['message'];
-                                // Tampilkan pesan sukses kepada pengguna
-                                echo $success_message;
-                            } else {
-                                // Tampilkan pesan default jika tidak ada pesan sukses
-                                echo "Operasi berhasil dilakukan.";
-                            }
-                            ?>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
 
 
-                            <h3 class="card-title" for="limit">Book Data Table</h3>
-                            <select id="limit" class="mx-2" onchange="updateTable()">
-                                <option value="0">all</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                            </select>
 
-                            <div class="card-tools">
-                                <form method="post">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" id="search" name="search" class="form-control float-right" placeholder="Search" value="<?php echo isset($_POST['search']) ? $_POST['search'] : ''; ?>">
+                        <h3 class="card-title" for="limit">Book Data Table</h3>
+                        <select id="limit" class="mx-2" onchange="updateTable()">
+                            <option value="0">all</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </select>
 
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
+                        <div class="card-tools">
+                            <form method="post">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" id="search" name="search" class="form-control float-right" placeholder="Search" value="<?php echo isset($_POST['search']) ? $_POST['search'] : ''; ?>">
+
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap" id="data-table">
-                                <thead>
-                                    <tr>
-                                        <th class='text-center'>No</th>
-                                        <th class='text-center'>Code</th>
-                                        <th class='text-center'>Title</th>
-                                        <th class='text-center'>Author</th>
-                                        <th class='text-center'>Publisher</th>
-                                        <th class='text-center'>Stock</th>
-                                        <th class='text-center'>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-
-                                    // Inisialisasi query SQL
-                                    $sql = "SELECT * FROM book";
-
-                                    // Periksa apakah ada kata kunci pencarian yang dikirimkan
-                                    if (isset($_POST['search']) && !empty($_POST['search'])) {
-                                        // Jika ada kata kunci pencarian, tambahkan filter pencarian ke query SQL
-                                        $search = $_POST['search'];
-                                        $sql .= " WHERE Title LIKE '%$search%'";
-                                    }
-
-                                    $result = mysqli_query($conn, $sql);
-                                    $i = 1;
-
-                                    if (!$result) {
-                                        die("Error: " . mysqli_error($conn));
-                                    }
-
-                                    // Tampilkan data dari hasil query di dalam tbody
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo "<tr>";
-                                        echo "<td class='text-center'>" . $i . "</td>";
-                                        echo "<td class='text-center'>" . $row['Code'] . "</td>";
-                                        echo "<td class='text-center'>" . $row['Title'] . "</td>";
-                                        echo "<td class='text-center'>" . $row['Author'] . "</td>";
-                                        echo "<td class='text-center'>" . $row['Publisher'] . "</td>";
-                                        echo "<td class='text-center'>" . $row['Stock'] . "</td>";
-                                        echo "<td class='text-center'>";
-                                        echo "<button class='btn btn-warning mx-2'><a class='text-white' href='edit_book.php?book=" . $row['Code'] .
-                                            "' onclick='return confirm(\"Are you sure you want to edit this book ? : " . $row['Title'] . "\")'>Edit</a></button>";
-                                        echo "<button class='btn btn-danger'><a class='text-white' href='delete_book.php?book=" . $row['Code'] .
-                                            "' onclick='return confirm(\"Are you sure you want to delete this book ? : " . $row['Title'] . "?\")'>Delete</a></button>";
-                                        echo "</td>";
-                                        echo "</tr>";
-                                        $i++;
-                                    }
-
-                                    ?>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap" id="data-table">
+                            <thead>
+                                <tr>
+                                    <th class='text-center'>No</th>
+                                    <th class='text-center'>Code</th>
+                                    <th class='text-center'>Title</th>
+                                    <th class='text-center'>Author</th>
+                                    <th class='text-center'>Publisher</th>
+                                    <th class='text-center'>Stock</th>
+                                    <th class='text-center'>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+
+                                // Inisialisasi query SQL
+                                $sql = "SELECT * FROM book";
+
+                                // Periksa apakah ada kata kunci pencarian yang dikirimkan
+                                if (isset($_POST['search']) && !empty($_POST['search'])) {
+                                    // Jika ada kata kunci pencarian, tambahkan filter pencarian ke query SQL
+                                    $search = $_POST['search'];
+                                    $sql .= " WHERE Title LIKE '%$search%'";
+                                }
+
+                                $result = mysqli_query($conn, $sql);
+                                $i = 1;
+
+                                if (!$result) {
+                                    die("Error: " . mysqli_error($conn));
+                                }
+
+                                // Tampilkan data dari hasil query di dalam tbody
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<tr>";
+                                    echo "<td class='text-center'>" . $i . "</td>";
+                                    echo "<td class='text-center'>" . $row['Code'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['Title'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['Author'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['Publisher'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['Stock'] . "</td>";
+                                    echo "<td class='text-center'>";
+                                    echo "<button class='btn btn-warning mx-2'><a class='text-white' href='edit_book.php?book=" . $row['Code'] .
+                                        "' onclick='return confirm(\"Are you sure you want to edit this book ? : " . $row['Title'] . "\")'>Edit</a></button>";
+                                    echo "<button class='btn btn-danger'><a class='text-white' href='delete_book.php?book=" . $row['Code'] .
+                                        "' onclick='return confirm(\"Are you sure you want to delete this book ? : " . $row['Title'] . "?\")'>Delete</a></button>";
+                                    echo "</td>";
+                                    echo "</tr>";
+                                    $i++;
+                                }
+
+                                ?>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
-            <!-- /.row -->
+        </div>
+        <!-- /.row -->
 
-            <!-- /.row -->
+        <!-- /.row -->
 
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 
-    </body>
+</body>
 
-    </html>
+</html>

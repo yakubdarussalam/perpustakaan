@@ -40,19 +40,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Stock harus berupa angka.";
     }
 
+    
     // Jika tidak ada error, simpan data ke database
     if (empty($errors)) {
         $sql = "INSERT INTO book (Code, Title, Author, Publisher, Stock) VALUES ('$code', '$title', '$author', '$publisher', '$stock')";
-
+        session_start();
         if (mysqli_query($conn, $sql)) {
             // Data berhasil disimpan
-            $success_message = "Data berhasil ditambahkan.";
-            header("Location: success.php?message=" . urlencode($success_message));
-            exit();
+            $_SESSION['success_message'] = "Input Data Success";
+            header("Location: ../../dashboard.php?module=book");
+            
         } else {
             // Terjadi kesalahan
             $errors[] = "Error: " . mysqli_error($conn);
+            $_SESSION['error_message'] = $errors;
+            header("Location: ../../dashboard.php?module=book");
         }
+        
     }
 }
 
