@@ -107,7 +107,7 @@
                                     echo "<td class='text-center'>" . $row['Publisher'] . "</td>";
                                     echo "<td class='text-center'>" . $row['Stock'] . "</td>";
                                     echo "<td class='text-center'>";
-                                    echo "<button class='btn btn-warning mx-2'><a class='text-white' href='edit_book.php?book=" . $row['Code'] .
+                                    echo "<button class='btn btn-warning mx-2'><a class='text-white' href='dashboard.php?module=edit_book&&book=" . $row['Code'] .
                                         "' onclick='return confirm(\"Are you sure you want to edit this book ? : " . $row['Title'] . "\")'>Edit</a></button>";
                                     echo "<button class='btn btn-danger'><a class='text-white' href='delete_book.php?book=" . $row['Code'] .
                                         "' onclick='return confirm(\"Are you sure you want to delete this book ? : " . $row['Title'] . "?\")'>Delete</a></button>";
