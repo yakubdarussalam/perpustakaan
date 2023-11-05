@@ -108,8 +108,9 @@
                                     echo "<td class='text-center'>" . $row['Stock'] . "</td>";
                                     echo "<td class='text-center'>";
                                     echo "<button class='btn btn-warning mx-2'><a class='text-white' href='dashboard.php?module=edit_book&&book=" . $row['Code'] .
-                                        "''>Edit</a></button>";
-                                    echo "<button class='btn btn-danger delete-button' data-bookcode=". $row['Code'] .">Delete</button>";
+                                        "' onclick='return confirm(\"Are you sure you want to edit this book ? : " . $row['Title'] . "\")'>Edit</a></button>";
+                                    echo "<button class='btn btn-danger'><a class='text-white' href='delete_book.php?book=" . $row['Code'] .
+                                        "' onclick='return confirm(\"Are you sure you want to delete this book ? : " . $row['Title'] . "?\")'>Delete</a></button>";
                                     echo "</td>";
                                     echo "</tr>";
                                     $i++;
@@ -133,38 +134,6 @@
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-<script>
-document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("delete-button")) {
-        var bookCode = e.target.getAttribute("data-bookcode");
-        if (confirm("Are you sure you want to delete this book?")) {
-            // Jika pengguna konfirmasi penghapusan, kirimkan permintaan ke PHP
-            deleteBook(bookCode);
-        }
-    }
-});
-
-function deleteBook(bookCode) {
-    // Menggunakan JavaScript (misalnya, Fetch API) atau jQuery Ajax, Anda dapat mengirim permintaan ke PHP
-    // untuk memproses penghapusan buku dengan kode yang sesuai.
-    // Di sini, saya akan menunjukkan contoh menggunakan Fetch API.
-
-    fetch("../module/book/delete_book_action.php?book=" + bookCode, {
-        method: "DELETE", // Atau "POST" tergantung pada konfigurasi server
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Di sini Anda dapat menangani respons dari penghapusan
-        if (data.success) {
-            alert("Book deleted successfully.");
-            // Di sini Anda dapat menghapus baris buku dari tabel atau melakukan tindakan lain yang sesuai.
-        } 
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
-}
-</script>
 
 </body>
 

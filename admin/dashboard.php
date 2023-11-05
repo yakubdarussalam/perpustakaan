@@ -227,7 +227,7 @@ session_start();
             <strong><a href="#">Made with Happines </a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 0.1
+                <b>Version</b> 1.0
             </div>
         </footer>
     </div>
