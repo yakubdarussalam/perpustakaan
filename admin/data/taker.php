@@ -25,7 +25,7 @@
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
-        <button class="btn btn-success mx-4" onclick="location.href='dashboard.php?module=add_staff_data'">Add</button>
+        <button class="btn btn-success mx-4" onclick="location.href='dashboard.php?module=add_taker_data'">Add</button>
     </div><!-- /.container-fluid -->
 
 </div>
@@ -41,7 +41,7 @@
 
 
 
-                        <h3 class="card-title" for="limit">Staff Data Table</h3>
+                        <h3 class="card-title" for="limit">Taker Data Table</h3>
                         <select id="limit" class="mx-2" onchange="updateTable()">
                             <option value="0">all</option>
                             <option value="5">5</option>
@@ -69,19 +69,19 @@
                             <thead>
                                 <tr>
                                     <th class='text-center'>No</th>
-                                    <th class='text-center'>Staff ID</th>
-                                    <th class='text-center'>Name</th>
-                                    <th class='text-center'>Username</th>
-                                    <th class='text-center'>Password</th>
-                                    <th class='text-center'>Gender</th>
-                                    <th class='text-center'>Photo</th>
+                                    <th class='text-center'>Taker ID</th>
+                                    <th class='text-center'>Member Name</th>
+                                    <th class='text-center'>Staff Name</th>
+                                    <th class='text-center'>Date</th>
+                                    <th class='text-center'>Time</th>
+                                    <th class='text-center'>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
 
                                 // Inisialisasi query SQL
-                                $sql = "SELECT * FROM staff";
+                                $sql = "SELECT taker_id, member_name, staff_name, date, time  FROM taker INNER JOIN member ON taker.member_id = member.member_id INNER JOIN staff ON taker.staff_id = staff.staff_id";
 
                                 // Periksa apakah ada kata kunci pencarian yang dikirimkan
                                 if (isset($_POST['search']) && !empty($_POST['search'])) {
@@ -101,17 +101,16 @@
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     echo "<tr>";
                                     echo "<td class='text-center'>" . $i . "</td>";
-                                    echo "<td class='text-center'>" . $row['staff_id'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['taker_id'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['member_name'] . "</td>";
                                     echo "<td class='text-center'>" . $row['staff_name'] . "</td>";
-                                    echo "<td class='text-center'>" . $row['staff_username'] . "</td>";
-                                    echo "<td class='text-center'>" . $row['staff_password'] . "</td>";
-                                    echo "<td class='text-center'>" . $row['staff_gender'] . "</td>";
-                                    echo "<td class='text-center'>" . $row['staff_photo'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['date'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['time'] . "</td>";
                                     echo "<td class='text-center'>";
-                                    echo "<button class='btn btn-warning mx-2'><a class='text-white' href='dashboard.php?module=edit_staff&&staff=" . $row['staff_id'] .
-                                        "' onclick='return confirm(\"Are you sure you want to edit this staff ? : " . $row['staff_name'] . "\")'>Edit</a></button>";
-                                    echo "<button class='btn btn-danger'><a class='text-white' href='dashboard.php?module=delete_staff&&staff=" . $row['staff_id'] .
-                                        "'' onclick='return confirm(\"Are you sure you want to delete this staff ? : " . $row['staff_name'] . "?\")'>Delete</a></button>";
+                                    echo "<button class='btn btn-warning mx-2'><a class='text-white' href='dashboard.php?module=edit_taker&&taker=" . $row['taker_id'] .
+                                        "' onclick='return confirm(\"Are you sure you want to edit this taker ? : " . $row['taker_id'] . "\")'>Edit</a></button>";
+                                    echo "<button class='btn btn-danger'><a class='text-white' href='dashboard.php?module=delete_taker&&taker=" . $row['taker_id'] .
+                                        "'' onclick='return confirm(\"Are you sure you want to delete this taker ? : " . $row['taker_id'] . "?\")'>Delete</a></button>";
                                     echo "</td>";
                                     echo "</tr>";
                                     $i++;

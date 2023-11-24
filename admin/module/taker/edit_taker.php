@@ -3,13 +3,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Entry Book Data</h1>
+                    <h1 class="m-0">Edit Taker Data</h1>
                 </div><!-- /.col -->
 
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Data</a></li>
-                        <li class="breadcrumb-item"><a href="#">Book</a></li>
+                        <li class="breadcrumb-item"><a href="#">Taker</a></li>
                         <li class="breadcrumb-item"><a href=""><?php echo $title; ?></a></li>
                         </li>
                     </ol>
@@ -26,21 +26,21 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Edit Book</h3>
+                        <h3 class="card-title">Edit Taker</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="module/book/edit_book_action.php" method="POST">
+                    <form action="module/taker/edit_taker_action.php" method="POST">
                         <?php
                         // Siapkan kueri SQL untuk mengambil data buku berdasarkan bookCode
-                        $query = "SELECT * FROM book WHERE Code = '$Code'";
+                        $query = "SELECT * FROM taker WHERE taker_id = '$Taker'";
 
                         // Jalankan query SQL
                         $result = mysqli_query($conn, $query);
 
                         if ($result) {
                             // Ambil data buku
-                            $bookData = mysqli_fetch_assoc($result);
+                            $takerData = mysqli_fetch_assoc($result);
 
                             // Tutup koneksi database
                             mysqli_close($conn);
@@ -52,25 +52,27 @@
                         ?>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="">Book Code</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" name="code" maxlength="10" placeholder="" value="<?php echo $Code; ?>" disabled>
+                                <label for="">Taker ID</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" name="taker_id" maxlength="10" placeholder="" value="<?php echo $Taker; ?>" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="">Title</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" name="title" maxlength="50" placeholder="" value="<?php echo $bookData['Title']; ?>" required>
+                                <label for="">Member ID</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" name="member_id" maxlength="50" placeholder="" value="<?php echo $takerData['member_id']; ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="">Author</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" name="author" maxlength="50" placeholder="" value="<?php echo $bookData['Author']; ?>" required>
+                                <label for="">Staff ID</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" name="staff_id" maxlength="50" placeholder="" value="<?php echo $takerData['staff_id']; ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="">Publisher</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" name="publisher" maxlength="30" placeholder="" value="<?php echo $bookData['Publisher']; ?>" required>
+                                <label for="">Date</label>
+                                <input type="date" class="form-control" id="exampleInputEmail1" name="date" placeholder="" value="<?php echo $takerData['date']; ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="">Stock</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" name="stock" maxlength="3" placeholder="" value="<?php echo $bookData['Stock']; ?>" required>
+                                <label for="">Time</label>
+                                <input type="time" class="form-control" id="exampleInputEmail1" name="time" placeholder="" value="<?php echo $takerData['time']; ?>" required>
                             </div>
+                            
+                            
 
                         </div>
                         <!-- /.card-body -->

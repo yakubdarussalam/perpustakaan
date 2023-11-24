@@ -3,27 +3,27 @@
 #include "../../../config/connection.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    $bookCode = $_GET["book"];
+    $memberId = $_GET["member"];
     $errors = [];
 
     // Validasi book code, misalnya, Anda dapat memeriksa apakah itu adalah kode buku yang valid
-    if (empty($bookCode)) {
-        $errors[] = "Book code cannot be empty.";
+    if (empty($memberId)) {
+        $errors[] = "MemberId cannot be empty.";
     }
 
     if (empty($errors)) {
         // Lakukan proses penghapusan buku dari database
-        $deleteQuery = "DELETE FROM book WHERE Code = '$bookCode'";
+        $deleteQuery = "DELETE FROM member WHERE member_id = '$memberId'";
         
         if (mysqli_query($conn, $deleteQuery)) {
             // Penghapusan berhasil
             $_SESSION['success_message'] = "Delete Data Success";
-            echo '<script>setTimeout(function() { window.location.href = "dashboard.php?module=book"; }, 1000);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "dashboard.php?module=member"; }, 1000);</script>';
         } else {
             // Penghapusan gagal
             $errors[] = "Error: " . mysqli_error($conn);
             $_SESSION['error_message'] = $errors;
-            header("Location: ../../dashboard.php?module=book");
+            header("Location: ../../dashboard.php?module=member");
         }
         
         // Tutup koneksi database
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
     // Jika akses langsung ke action file tanpa submit form
     else {
-        header("Location: ../../dashboard.php?module=book");
+        header("Location: ../../dashboard.php?module=member");
         exit();
     }
 }
