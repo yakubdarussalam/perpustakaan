@@ -5,6 +5,7 @@ $bookCode = isset($_GET['book']) ? $_GET['book'] : '';
 $staffId = isset($_GET['staff']) ? $_GET['staff'] : '';
 $memberId = isset($_GET['member']) ? $_GET['member'] : '';
 $takerId = isset($_GET['taker']) ? $_GET['taker'] : '';
+$returnId = isset($_GET['return']) ? $_GET['return'] : '';
 
 if($_GET['module']=="book"){
     include "data/book.php";
@@ -48,4 +49,16 @@ else if($_GET['module']=="taker"){
     include "module/taker/edit_taker.php";
 } else if($module === 'delete_taker' && !empty($takerId)){
     include "module/taker/delete_taker_action.php";
+}
+
+
+else if($_GET['module']=="return"){
+    include "data/return.php";
+} else if ($_GET['module'] == "add_return_data") {
+    include "module/return/add_return.php";
+} else if ($module === 'edit_return' && !empty($returnId)) {
+    $Return = $_GET['return']; // Ambil nilai 'book' dari URL
+    include "module/return/edit_return.php";
+} else if($module === 'delete_return' && !empty($returnId)){
+    include "module/return/delete_return_action.php";
 }

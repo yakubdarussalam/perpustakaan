@@ -193,7 +193,7 @@ session_start();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="?module=logout" class="nav-link">
+                            <a href="logout.php" class="nav-link">
                                 <i class="nav-icon fa-solid fa-right-from-bracket" style="color: red;"></i>
                                 <p style="color: red; font-weight:bold;">
                                     Logout
