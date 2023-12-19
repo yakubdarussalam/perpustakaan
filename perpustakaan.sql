@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2023 at 03:18 PM
+-- Generation Time: Dec 19, 2023 at 01:51 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -57,7 +57,7 @@ INSERT INTO `book` (`Code`, `Title`, `Author`, `Publisher`, `Stock`) VALUES
 --
 
 CREATE TABLE `member` (
-  `member_id` varchar(5) NOT NULL,
+  `member_id` int(5) NOT NULL,
   `member_name` varchar(30) NOT NULL,
   `member_username` varchar(12) NOT NULL,
   `member_password` text NOT NULL,
@@ -70,9 +70,51 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`member_id`, `member_name`, `member_username`, `member_password`, `member_gender`, `member_photo`) VALUES
-('MB01', 'Agus Nurjaman', 'agus01', '12345', 'Male', 'Ada'),
-('MB02', 'Ujang', 'ujangarut', '12345', 'Male', 'Ada'),
-('MB03', 'Ucup Bansal', 'ucupbansal', '123456', 'Male', 'Ada');
+(2001, 'Agus Nurjaman', 'agus01', '12345', 'Male', 'Ada'),
+(2002, 'Ujang', 'ujangarut', '12345', 'Male', 'Ada'),
+(2003, 'Ucup Bansal', 'ucupbansal', '123456', 'Male', 'Ada'),
+(2004, 'Wisnu', 'wisnubansal', '1234', 'Male', 'Yes'),
+(2005, 'Chandra Wijayanto', 'wisnugacor', '123123123', 'Female', 'Ada');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `returns`
+--
+
+CREATE TABLE `returns` (
+  `return_id` int(5) NOT NULL,
+  `member_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `returns`
+--
+
+INSERT INTO `returns` (`return_id`, `member_id`) VALUES
+(5001, 3001);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `returns_detail`
+--
+
+CREATE TABLE `returns_detail` (
+  `return_detail_id` int(5) NOT NULL,
+  `return_id` int(10) NOT NULL,
+  `book_id` int(10) NOT NULL,
+  `return_date` date NOT NULL,
+  `penalty` int(20) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `returns_detail`
+--
+
+INSERT INTO `returns_detail` (`return_detail_id`, `return_id`, `book_id`, `return_date`, `penalty`, `description`) VALUES
+(5501, 5001, 1001, '2023-12-10', 10000, 'TEST');
 
 -- --------------------------------------------------------
 
@@ -94,9 +136,47 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`staff_id`, `staff_name`, `staff_username`, `staff_password`, `staff_gender`, `staff_photo`) VALUES
-('ST01', 'Agus Nurjaman', 'agus01', '12345', 'Male', 'Yes'),
+('ST01', 'Agus Suryanto', 'agus01', '12345', 'Male', 'Yes'),
 ('ST02', 'Ujang', 'ujangarut', '12345', 'Male', 'Yes'),
-('ST03', 'Andika Hari', 'andika03', '12345', 'Male', 'Yes');
+('ST03', 'Neneng', 'neneng0305', '12345', 'Female', 'Yes');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taker`
+--
+
+CREATE TABLE `taker` (
+  `taker_id` int(5) NOT NULL,
+  `member_id` varchar(10) NOT NULL,
+  `staff_id` varchar(10) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `taker`
+--
+
+INSERT INTO `taker` (`taker_id`, `member_id`, `staff_id`, `date`, `time`) VALUES
+(4001, '2001', 'ST01', '2023-11-24', '20:18:04'),
+(4002, '2002', 'ST01', '2023-11-16', '20:15:48'),
+(4003, '2006', 'ST03', '2023-11-17', '20:41:00'),
+(4005, '2001', 'ST01', '2023-11-16', '20:44:00'),
+(4006, '2001', 'ST01', '2023-11-25', '20:06:00'),
+(4008, '2003', 'ST02', '2023-11-24', '22:05:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taker_detail`
+--
+
+CREATE TABLE `taker_detail` (
+  `taker_detail_id` varchar(5) NOT NULL,
+  `taker_id` varchar(5) NOT NULL,
+  `book_id` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -115,10 +195,62 @@ ALTER TABLE `member`
   ADD PRIMARY KEY (`member_id`);
 
 --
+-- Indexes for table `returns`
+--
+ALTER TABLE `returns`
+  ADD PRIMARY KEY (`return_id`);
+
+--
+-- Indexes for table `returns_detail`
+--
+ALTER TABLE `returns_detail`
+  ADD PRIMARY KEY (`return_detail_id`);
+
+--
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
   ADD PRIMARY KEY (`staff_id`);
+
+--
+-- Indexes for table `taker`
+--
+ALTER TABLE `taker`
+  ADD PRIMARY KEY (`taker_id`);
+
+--
+-- Indexes for table `taker_detail`
+--
+ALTER TABLE `taker_detail`
+  ADD PRIMARY KEY (`taker_detail_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+  MODIFY `member_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2007;
+
+--
+-- AUTO_INCREMENT for table `returns`
+--
+ALTER TABLE `returns`
+  MODIFY `return_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5002;
+
+--
+-- AUTO_INCREMENT for table `returns_detail`
+--
+ALTER TABLE `returns_detail`
+  MODIFY `return_detail_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5502;
+
+--
+-- AUTO_INCREMENT for table `taker`
+--
+ALTER TABLE `taker`
+  MODIFY `taker_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4009;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
