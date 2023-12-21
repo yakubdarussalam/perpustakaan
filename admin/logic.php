@@ -47,7 +47,12 @@ elseif ($modules=="add_taker_data") {
     $title = "Add Taker";
 } elseif ($module === 'edit_taker' && !empty($takerId)) {
     $title = "Edit Taker";
-} 
+} elseif ($module === 'detail_taker' && !empty($takerId)) {
+    $title = "Detail Taker";
+} elseif ($module === 'add_taker_book' && !empty($takerId)) {
+    $title = "Add Taker Book";
+}
+
 
 elseif ($modules=="add_return_data") {
     $title = "Add Return";

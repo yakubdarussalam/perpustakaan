@@ -47,6 +47,12 @@ else if($_GET['module']=="taker"){
 } else if ($module === 'edit_taker' && !empty($takerId)) {
     $Taker = $_GET['taker']; // Ambil nilai 'book' dari URL
     include "module/taker/edit_taker.php";
+} else if ($module === 'taker_detail' && !empty($takerId)) {
+    $Taker = $_GET['taker']; // Ambil nilai 'book' dari URL
+    include "module/taker/taker_detail.php";
+} else if ($module === 'add_taker_book' && !empty($takerId)) {
+    $Taker = $_GET['taker']; // Ambil nilai 'book' dari URL
+    include "module/taker/add_taker_book.php";
 } else if($module === 'delete_taker' && !empty($takerId)){
     include "module/taker/delete_taker_action.php";
 }

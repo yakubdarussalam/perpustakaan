@@ -109,6 +109,8 @@
                                     echo "<td class='text-center'>";
                                     echo "<button class='btn btn-warning mx-2'><a class='text-white' href='dashboard.php?module=edit_taker&&taker=" . $row['taker_id'] .
                                         "' onclick='return confirm(\"Are you sure you want to edit this taker ? : " . $row['taker_id'] . "\")'>Edit</a></button>";
+                                    echo "<button class='btn btn-primary     mx-2'><a class='text-white' href='dashboard.php?module=taker_detail&&taker=" . $row['taker_id'] .
+                                        "' " . $row['taker_id'] . "\")'>Detail</a></button>";
                                     echo "<button class='btn btn-danger'><a class='text-white' href='dashboard.php?module=delete_taker&&taker=" . $row['taker_id'] .
                                         "'' onclick='return confirm(\"Are you sure you want to delete this taker ? : " . $row['taker_id'] . "?\")'>Delete</a></button>";
                                     echo "</td>";
