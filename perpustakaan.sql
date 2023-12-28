@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2023 at 01:51 PM
+-- Generation Time: Dec 28, 2023 at 04:06 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -128,6 +128,7 @@ CREATE TABLE `staff` (
   `staff_username` varchar(12) NOT NULL,
   `staff_password` text NOT NULL,
   `staff_gender` varchar(20) NOT NULL,
+  `level` text NOT NULL,
   `staff_photo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -135,10 +136,10 @@ CREATE TABLE `staff` (
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`staff_id`, `staff_name`, `staff_username`, `staff_password`, `staff_gender`, `staff_photo`) VALUES
-('ST01', 'Agus Suryanto', 'agus01', '12345', 'Male', 'Yes'),
-('ST02', 'Ujang', 'ujangarut', '12345', 'Male', 'Yes'),
-('ST03', 'Neneng', 'neneng0305', '12345', 'Female', 'Yes');
+INSERT INTO `staff` (`staff_id`, `staff_name`, `staff_username`, `staff_password`, `staff_gender`, `level`, `staff_photo`) VALUES
+('ST01', 'Agus Suryanto', 'agus01', '12345', 'Male', 'staff', 'Yes'),
+('ST02', 'Ujang', 'ujangarut', '12345', 'Male', 'staff', 'Yes'),
+('ST03', 'Neneng', 'neneng0305', '12345', 'Female', 'staff', 'Yes');
 
 -- --------------------------------------------------------
 
@@ -161,10 +162,7 @@ CREATE TABLE `taker` (
 INSERT INTO `taker` (`taker_id`, `member_id`, `staff_id`, `date`, `time`) VALUES
 (4001, '2001', 'ST01', '2023-11-24', '20:18:04'),
 (4002, '2002', 'ST01', '2023-11-16', '20:15:48'),
-(4003, '2006', 'ST03', '2023-11-17', '20:41:00'),
-(4005, '2001', 'ST01', '2023-11-16', '20:44:00'),
-(4006, '2001', 'ST01', '2023-11-25', '20:06:00'),
-(4008, '2003', 'ST02', '2023-11-24', '22:05:00');
+(4003, '2006', 'ST03', '2023-11-17', '20:41:00');
 
 -- --------------------------------------------------------
 
@@ -173,10 +171,20 @@ INSERT INTO `taker` (`taker_id`, `member_id`, `staff_id`, `date`, `time`) VALUES
 --
 
 CREATE TABLE `taker_detail` (
-  `taker_detail_id` varchar(5) NOT NULL,
+  `taker_detail_id` int(5) NOT NULL,
   `taker_id` varchar(5) NOT NULL,
   `book_id` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `taker_detail`
+--
+
+INSERT INTO `taker_detail` (`taker_detail_id`, `taker_id`, `book_id`) VALUES
+(4, '4001', 'B003'),
+(13, '4002', 'B001'),
+(14, '4002', 'B002'),
+(15, '4002', 'B003');
 
 --
 -- Indexes for dumped tables
@@ -250,7 +258,13 @@ ALTER TABLE `returns_detail`
 -- AUTO_INCREMENT for table `taker`
 --
 ALTER TABLE `taker`
-  MODIFY `taker_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4009;
+  MODIFY `taker_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4011;
+
+--
+-- AUTO_INCREMENT for table `taker_detail`
+--
+ALTER TABLE `taker_detail`
+  MODIFY `taker_detail_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
