@@ -1,6 +1,10 @@
+body {
+  background-color: darkslategray;
+}
+
 .btn-color{
   background-color: #0e1c36;
-  color: #fff;
+  color: #502d2d;
   
 }
 
@@ -13,7 +17,7 @@
 
 
 .cardbody-color{
-  background-color: #ebf2fa;
+  background-color: #1b65b9;
 }
 
 a{

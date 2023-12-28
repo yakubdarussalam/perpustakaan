@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Lakukan kueri ke database untuk mencari staff dengan username yang cocok
-    $sql = "SELECT staff_id, staff_name, staff_password FROM staff WHERE staff_username = '$username'";
+    $sql = "SELECT staff_id, staff_name, staff_password, level FROM staff WHERE staff_username = '$username'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set session variables
             $_SESSION['staff_id'] = $row['staff_id'];
             $_SESSION['staff_name'] = $row['staff_name'];
+            $_SESSION['level'] = $row['level'];
 
             // Redirect ke halaman setelah login
             header("location: dashboard.php?module=dashboard");

@@ -20,22 +20,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Book ID tidak boleh kosong.";
     }
     
-    // Jika tidak ada error, simpan data ke database
+    // Jika tidak ada error, cek terlebih dahulu keberadaan data dalam database
     if (empty($errors)) {
-        $sql = "INSERT INTO taker_detail (taker_id, book_id) VALUES ('$taker_id', '$book_id')";
-        session_start();
-        if (mysqli_query($conn, $sql)) {
-            // Data berhasil disimpan
-            $_SESSION['success_message'] = "Input Data Success";
-            header("Location: ../../dashboard.php?module=add_taker_book&&taker=".$tak_id);
-            
+        $checkQuery = "SELECT * FROM taker_detail WHERE taker_id = '$taker_id' AND book_id = '$book_id'";
+        $result = mysqli_query($conn, $checkQuery);
+
+        if (mysqli_num_rows($result) > 0) {
+            // Jika data sudah ada, tambahkan pesan error
+            session_start();
+            $_SESSION['error_message'] = "Data already exist.";
+            header("Location: ../../dashboard.php?module=taker_detail&&taker=".$tak_id);
+            exit();
         } else {
-            // Terjadi kesalahan
-            $errors[] = "Error: " . mysqli_error($conn);
-            $_SESSION['error_message'] = $errors;
-            header("Location: ../../dashboard.php?module=add_taker_book&&taker=".$tak_id);
+            // Simpan data ke database jika tidak ada data yang sama
+            $sql = "INSERT INTO taker_detail (taker_id, book_id) VALUES ('$taker_id', '$book_id')";
+            session_start();
+            if (mysqli_query($conn, $sql)) {
+                // Data berhasil disimpan
+                $_SESSION['success_message'] = "Input Data Success";
+                header("Location: ../../dashboard.php?module=taker_detail&&taker=".$tak_id);
+                exit();
+            } else {
+                // Terjadi kesalahan
+                $errors[] = "Error: " . mysqli_error($conn);
+                $_SESSION['error_message'] = $errors;
+                header("Location: ../../dashboard.php?module=taker_detail&&taker=".$tak_id);
+                exit();
+            }
         }
-        
     }
 }
 
@@ -46,6 +58,4 @@ else {
 }
 
 mysqli_close($conn); // Tutup koneksi database
-
-
 ?>

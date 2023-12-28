@@ -5,6 +5,7 @@ $bookCode = isset($_GET['book']) ? $_GET['book'] : '';
 $staffId = isset($_GET['staff']) ? $_GET['staff'] : '';
 $memberId = isset($_GET['member']) ? $_GET['member'] : '';
 $takerId = isset($_GET['taker']) ? $_GET['taker'] : '';
+$bookId = isset($_GET['bookId']) ? $_GET['bookId'] : '';
 $returnId = isset($_GET['return']) ? $_GET['return'] : '';
 
 if($_GET['module']=="book"){
@@ -51,11 +52,18 @@ else if($_GET['module']=="taker"){
     $Taker = $_GET['taker']; // Ambil nilai 'book' dari URL
     include "module/taker/taker_detail.php";
 } else if ($module === 'add_taker_book' && !empty($takerId)) {
-    $Taker = $_GET['taker']; // Ambil nilai 'book' dari URL
+    $Taker = $_GET['taker']; 
     include "module/taker/add_taker_book.php";
+} else if($module === 'edit_taker_book' && !empty($takerId) && !empty($bookId)){
+    $Taker = $_GET['taker'];
+    $Book = $_GET['bookId'];
+    include "module/taker/edit_taker_book.php";
 } else if($module === 'delete_taker' && !empty($takerId)){
     include "module/taker/delete_taker_action.php";
-}
+} else if($module === 'delete_taker_book' && !empty($takerId) && !empty($bookId)){
+    include "module/taker/delete_taker_book_action.php";
+} 
+
 
 
 else if($_GET['module']=="return"){

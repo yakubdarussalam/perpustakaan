@@ -1,6 +1,17 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <?php
+            if (isset($_SESSION['success_message'])) {
+                echo '<button class="btn btn-success toastsDefaultSuccess">' . $_SESSION['success_message'] . '</button>';
+                unset($_SESSION['success_message']); // Hapus pesan sukses dari session
+            } elseif (isset($_SESSION['error_message'])) {
+                echo '<button class="btn btn-danger toastsDefaultDanger">' . $_SESSION['error_message'] . '</button>';
+                unset($_SESSION['error_message']); // Hapus pesan error dari session
+            }
+            ?>
+        </div>
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">Detail Taker Data</h1>
@@ -8,8 +19,8 @@
 
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Data</a></li>
-                        <li class="breadcrumb-item"><a href="#">Taker</a></li>
+                        <li class="breadcrumb-item"><a href="?module=dashboard">Data</a></li>
+                        <li class="breadcrumb-item"><a href="?module=taker">Taker</a></li>
                         <li class="breadcrumb-item"><a href=""><?php echo $title; ?></a></li>
                         </li>
                     </ol>
@@ -128,10 +139,10 @@
                                     echo "<td class='text-center'>" . $row['author'] . "</td>";
                                     echo "<td class='text-center'>" . $row['publisher'] . "</td>";
                                     echo "<td class='text-center'>";
-                                    echo "<button class='btn btn-warning mx-2'><a class='text-white' href='dashboard.php?module=edit_taker_book&&book=" . $row['code'] .
-                                        "''>Edit</a></button>";
-                                    echo "<button class='btn btn-danger'><a class='text-white' href='dashboard.php?module=delete_taker_book&&book=" . $row['code'] .
-                                        "'' onclick='return confirm(\"Are you sure you want to delete this book ? : " . $row['title'] . "?\")'>Delete</a></button>";
+                                    echo "<button class='btn btn-warning mx-2'><a class='text-white' href='dashboard.php?module=edit_taker_book&&taker=" . $Taker ."&&bookId=" . $row['code'] ."''>Edit</a></button>";
+                                        
+                                    echo "<button class='btn btn-danger'><a class='text-white' href='dashboard.php?module=delete_taker_book&&taker=" . $Taker .
+                                        "&&bookId=" . $row['code'] ."'' onclick='return confirm(\"Are you sure you want to delete this book ? : " . $row['title'] . "?\")'>Delete</a></button>";
                                     echo "</td>";
                                     echo "</tr>";
                                     $i++;

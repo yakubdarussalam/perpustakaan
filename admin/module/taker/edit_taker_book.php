@@ -55,7 +55,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Book ID</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" name="book_id" maxlength="50" placeholder="Enter Book ID" required>
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="book_id" maxlength="50" value="<?php echo $Book;?>" placeholder="Enter Book ID" required>
                         </div>
                         
                     </div>
